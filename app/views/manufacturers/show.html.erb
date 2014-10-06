@@ -1,0 +1,30 @@
+<h2><%= @manufacturer.name %></h2>
+
+<h4> Location: <%= @manufacturer.country %>
+
+<h6> Look at All of our cars </h6>
+<ul>
+<% @manufacturer.cars.each do |car| %>
+<li>
+Color: <%= car.color %><br>
+Mileage: <%= car.mileage %><br>
+Year: <%= car.year %><br>
+Description: <%= car.description %>
+</li>
+<% end %>
+</ul>
+
+<h1> Create a Car  </h1>
+<%= form_for [@manufacturer, @cars] do |f| %>
+<p>
+<%= f.label :color %>
+<%= f.text_field :color %><br>
+<%= f.label :mileage %>
+<%= f.text_field :mileage %><br>
+<%= f.label :year %>
+<%= f.text_field :year %> <br>
+<%= f.label :description %>
+<%= f.text_area :description %>
+</p>
+<%= f.submit %>
+<% end %>
