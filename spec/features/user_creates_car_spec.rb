@@ -2,35 +2,38 @@ require 'rails_helper'
 
 feature 'user adds a new car' do
 
+  before :each do
+    @manufacturer = FactoryGirl.create(:manufacturer)
+    visit manufacturer_path(@manufacturer)
+  end
+
   scenario 'user completes required fields with valid info' do
-    visit manufacturer_path(1)
+    car = FactoryGirl.build(:car)
 
-
-    fill_in 'Color', with: 'blue'
-    fill_in 'Mileage', with: 100
-    fill_in 'Year', with: 1992
-
+    fill_in 'Color', with: car.color
+    fill_in 'Mileage', with: car.mileage
+    fill_in 'Year', with: car.year
     click_on 'Create Car'
 
     expect(page).to have_content 'Car Saved Successfully'
-    expect(page).to have_content 'blue'
-    expect(page).to have_content 100
-    expect(page).to have_content 1992
+    expect(page).to have_content car.color
+    expect(page).to have_content car.mileage
+    expect(page).to have_content car.year
   end
 
   scenario 'user enters invalid year' do
-    visit manufacturer_path(1)
-    fill_in 'Color', with: 'blue'
-    fill_in 'Mileage', with: 1992
-    fill_in 'Year', with: 1234
+    car = FactoryGirl.build(:car)
+
+    fill_in 'Color', with: car.color
+    fill_in 'Mileage', with: car.mileage
+    fill_in 'Year', with: 1919
     click_on 'Create Car'
 
     expect(page).to_not have_content 'Car Saved Successfully'
     expect(page).to have_content 'Error'
   end
 
-  scenario 'user enters invalid info' do
-    visit manufacturer_path(1)
+  scenario 'without required attributes' do
     click_on 'Create Car'
 
     expect(page).to_not have_content 'Car Saved Successfully'
