@@ -1,7 +1,6 @@
 class ManufacturersController < ApplicationController
   def new
     @manufacturer = Manufacturer.new
-
   end
 
   def index
@@ -14,7 +13,7 @@ class ManufacturersController < ApplicationController
   end
 
   def create
-    @manufacturer = Manufacturer.new(manufact_params)
+    @manufacturer = Manufacturer.new(manufacturer_params)
     if @manufacturer.save
       redirect_to manufacturers_path, notice: 'Successfully Added Manufacturer'
     else
@@ -24,7 +23,7 @@ class ManufacturersController < ApplicationController
 
   private
 
-  def manufact_params
+  def manufacturer_params
     params.require(:manufacturer).permit(:name, :country)
   end
 end

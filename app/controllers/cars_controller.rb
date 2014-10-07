@@ -8,9 +8,8 @@ class CarsController < ApplicationController
     @manufacturer = Manufacturer.find(params[:manufacturer_id])
     @car.manufacturer = @manufacturer
     if @car.save
-      flash[:notice] = 'Car Added Successfully'
       redirect_to manufacturer_path(@manufacturer),
-      notice: 'Car Saved Successfully'
+        notice: 'Car Saved Successfully'
     else
       redirect_to manufacturer_path(@manufacturer), notice: 'Error'
     end
